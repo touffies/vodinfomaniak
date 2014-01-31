@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <descriptif lang="fr">
+    <titre>VOD Infomaniak Network</titre>
+    <chapo></chapo>
+    <description>Ce plugin vous permet de vendre des produits dématérialisés de type vidéo, hébergés par Infomaniak Network. (http://streaming.infomaniak.com/stockage-video-en-ligne)</description>
+    <postscriptum></postscriptum>
+  </descriptif>
+  <version>1.0</version>
+  <auteur>
+    <nom>Christophe Laffont - claffont@openstudio.fr</nom>
+    <societe>OpenStudio</societe>
+    <email>claffont@openstudio.fr</email>
+    <web>http://www.openstudio.fr</web>
+  </auteur>
+  <type>transport</type>
+  <prerequis/>
+  <thelia>1.5.0</thelia>
+  <etat>production</etat>
+  <documentation>README.txt</documentation>
+  <urlmiseajour></urlmiseajour>
+</plugin>
