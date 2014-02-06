@@ -17,7 +17,7 @@
     <table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: separate;margin: 0;">
         <tbody>
         <tr class="claire">
-            <td class="designation"><?php echo trad('PLayer', 'vodinfomaniak'); ?><br> <span class="note"><?php echo trad('Player par défaut', 'vodinfomaniak'); ?></span></td>
+            <td class="designation"><?php echo trad('Player', 'vodinfomaniak'); ?><br> <span class="note"><?php echo trad('Player par défaut', 'vodinfomaniak'); ?></span></td>
             <td>
                 <form id="frm_player" action="" method="post">
                     <input type="hidden" name="action" value="player_save" />
