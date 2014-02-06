@@ -54,18 +54,7 @@ class Vodinfomaniak_commande extends Baseobj {
 
 		parent::__construct();
 
-		if (intval($id) > 0) $this->charger($id);
-	}
-
-    /**
-     * Méthode utilisée pour chercher un objet de type Vodinfomaniak_commande en fonction de son identifiant
-     *
-     * @param $id Identifiant de la commande
-     *
-     * @return object Retourne un object de type Vodinfomaniak_commande
-     */
-    public function charger($id){
-		return $this->getVars("SELECT * FROM $this->table WHERE id=" . intval($id));
+		if (intval($id) > 0) $this->charger_id($id);
 	}
 
     /**
