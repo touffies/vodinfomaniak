@@ -451,7 +451,7 @@ class Vodinfomaniak extends PluginsClassiques {
     public function video_url($sToken, $sVideoName)
     {
         // On construit l'url
-        $url = defined('CONST_VODINFOMANIAK_URL') ? CONST_VODINFOMANIAK_URL : "?fond=player&name=__SVIDEONAME__";
+        $url = defined('VODINFOMANIAK_URL') ? VODINFOMANIAK_URL : "?fond=player&name=__SVIDEONAME__";
 
         // Répertoire ayant une restriction par clé
         $hash = $sToken ? $this->getTemporaryKey($sToken, $sVideoName) : "";
