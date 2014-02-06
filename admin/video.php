@@ -54,7 +54,9 @@
 <?php
 // On recherche si des produits actifs sont associés à avec des vidéos qui n'existent plus
 $prod = new Produit();
-$produits = $prod->query_liste("SELECT prod.id, prod.ref FROM $prod->table AS prod INNER JOIN ".Vodinfomaniak::TABLE." as vod ON prod.id = vod.produit_id WHERE vod.iVideo NOT IN (".implode(',', $videoListID).") AND prod.ligne=1");
+$where = count($videoListID) > 0 ? "vod.iVideo NOT IN (".implode(',', $videoListID).") AND" : "" ;
+$query = "SELECT prod.id, prod.ref FROM $prod->table AS prod INNER JOIN ".Vodinfomaniak::TABLE." as vod ON prod.id = vod.produit_id WHERE $where prod.ligne=1";
+$produits = $prod->query_liste($query);
 
 if(count($produits) > 0)
 {
