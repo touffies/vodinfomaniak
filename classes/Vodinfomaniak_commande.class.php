@@ -65,7 +65,8 @@ class Vodinfomaniak_commande extends Baseobj {
      * @return int Retourne le nombre de produits
      */
     public function count_commande($commande_id){
-        return $this->getVars("SELECT count(*) FROM $this->table WHERE id=" . intval($commande_id));
+        $res = $this->query("SELECT count(*) AS nb FROM $this->table WHERE id=" . intval($commande_id));
+        return $nb = $res ? $this->get_result($res,0,"nb") : 0;
     }
 
     /**
