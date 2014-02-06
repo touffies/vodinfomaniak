@@ -36,8 +36,8 @@ define("VODINFOMANIAK_STOKEN", 1);
 // Limitation de temps (7 jours)
 define("VODINFOMANIAK_TIME_MAX", 7);
 
-// Lien pour visualiser les vidéos (Variables possible : __SKEY__, __STOKEN__, __SVIDEONAME__, __SUSERIP__)
-define("VODINFOMANIAK_URL", "?fond=player&key=__SKEY__&name=__SVIDEONAME__");
+// Lien pour visualiser les vidéos (Variables possible : __SKEY__, __STOKEN__, __SVIDEONAME__, __SUSERIP___, __VODID__)
+define("VODINFOMANIAK_URL", "?fond=player&key=__SKEY__&name=__SVIDEONAME__&vod=__VODID__");
 
 // Nom du module à utiliser si on veut avoir aucun frais de livraison
 define("VODINFOMANIAK_LIVRAISON_ZERO", "livraison_zero");
