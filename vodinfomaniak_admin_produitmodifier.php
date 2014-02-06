@@ -50,10 +50,10 @@ if( $ref != "")
 <div class="entete">
     <div class="titre" style="cursor:pointer" onclick="$('#pliantvodinfomaniak').show('slow');"><?php echo trad('VOD Infomaniak', 'vodinfomaniak'); ?></div>
 </div>
-<div id="pliantvodinfomaniak">
+<div id="pliantvodinfomaniak" class="blocs_pliants_prod">
     <table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: separate;margin: 0;">
         <tbody>
-            <tr class="claire">
+            <tr class="claire" style="height: auto;">
                 <td class="designation"><?php echo trad('Vidéo', 'vodinfomaniak'); ?><br> <span class="note"><?php echo trad('Associer une vidéo à ce produit.', 'vodinfomaniak'); ?></span></td>
                 <td>
                     <select name="select_video" id="select_video" class="form_long">
