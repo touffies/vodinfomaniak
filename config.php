@@ -28,14 +28,18 @@
 //define("CONST_VODINFOMANIAK_UPLOAD_FILE_MAX", 300);
 
 // Nombre de vidéo maximum que l'API doit retourner
-define("CONST_VODINFOMANIAK_VIDEO_MAX", 200);
+define("VODINFOMANIAK_VIDEO_MAX", 200);
 
 // Dossier sécurisé uniquement (0 : tous les dossiers ou 1 : uniquement les dossiers sécurisés)
-define("CONST_VODINFOMANIAK_STOKEN", 1);
+define("VODINFOMANIAK_STOKEN", 1);
 
 // Limitation de temps (7 jours)
-define("CONST_VODINFOMANIAK_TIME_MAX", 7);
+define("VODINFOMANIAK_TIME_MAX", 7);
 
 // Lien pour visualiser les vidéos (Variables possible : __SKEY__, __STOKEN__, __SVIDEONAME__, __SUSERIP__)
-define("CONST_VODINFOMANIAK_URL", "?fond=player&key=__SKEY__&name=__SVIDEONAME__");
+define("VODINFOMANIAK_URL", "?fond=player&key=__SKEY__&name=__SVIDEONAME__");
+
+// Nom du module à utiliser si on veut avoir aucun frais de livraison
+define("VODINFOMANIAK_LIVRAISON_ZERO", "livraison_zero");
+
 ?>

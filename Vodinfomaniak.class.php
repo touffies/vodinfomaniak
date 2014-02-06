@@ -51,9 +51,9 @@ include_once __DIR__ . "/../../../fonctions/lire.php";
  * Class Vodinfomaniak
  *
  * Cette classe permet de gérer l'achat de produit dématérialisé de type vidéo et de modifier
- * le type de livraison en fonction du panier du client.
+ * le type de livraison en fonction du panier du client. (Nécessite le plugin Livraison_zero)
  */
-class Vodinfomaniak extends PluginsTransports {
+class Vodinfomaniak extends PluginsClassiques {
 
 	const MODULE = "vodinfomaniak";
 
@@ -97,22 +97,6 @@ class Vodinfomaniak extends PluginsTransports {
 			) AUTO_INCREMENT=1 ;";
         $this->query($query);
 
-        // Modification de la description du plugin de transport
-        $this->ajout_desc("N/A (Location)", "Module VOD Infomaniak pour Thelia", "Ce plugin vous permet de vendre des produits dématérialisés de type vidéos, hébergés par Infomaniak Network.", 1);
-
-        // On associe à une ZONE
-        $mod = new Modules();
-        $mod->charger(self::MODULE);
-
-        $zone = new Zone();
-        $res_zone = $zone->query("SELECT * FROM $zone->table");
-        while($res_zone && $row = $this->fetch_object($res_zone)) {
-            $transzone = new Transzone();
-            $transzone->transport = $mod->id;
-            $transzone->zone = $row->id;
-            $transzone->add();
-        }
-
         // On initialise
         $vod_commande = new Vodinfomaniak_commande();
         $vod_commande->init();
@@ -138,18 +122,9 @@ class Vodinfomaniak extends PluginsTransports {
      *
      * @return objet Un objet Vodinfomaniak
      */
-    function charger_produit($produit_id){
-        return $this->getVars("SELECT * FROM $this->table WHERE produit_id=" . intval($produit_id));
-    }
-
-    /**
-     * Méthode utilisée pour le calcul des frais de livraison
-     *
-     * @return int  Aucun frais de transport
-     */
-    function calcule()
+    function charger_produit($produit_id)
     {
-        return 0;
+        return $this->getVars("SELECT * FROM $this->table WHERE produit_id=" . intval($produit_id));
     }
 
     /**
@@ -227,7 +202,8 @@ class Vodinfomaniak extends PluginsTransports {
      *
      * @return string
      */
-    private function boucleCommande($texte, $args) {
+    private function boucleCommande($texte, $args)
+    {
 
         // Récupération des arguments
         $commande_id = lireTag($args, "commande", "int");
@@ -290,42 +266,68 @@ class Vodinfomaniak extends PluginsTransports {
 
     /**
      * Boucle permettant de filtrer le type de transport à proposer au client
-     *         en fonction du type de produit dans le panier.
+     * en fonction du type de produit dans le panier.
      *
      * @param $texte
      * @param $args
      *
      * @return string
      */
-    private function boucleTransport($texte, $args) {
+    private function boucleTransport($texte, $args)
+    {
+        $livraison_zero = defined('VODINFOMANIAK_LIVRAISON_ZERO') ? VODINFOMANIAK_LIVRAISON_ZERO :  "livraison_zero";
 
-        $exclusion = "";
+        // Récupération des arguments
+        $id = lireTag($args, "id", "int");
+        $exclusion = lireTag($args, "exclusion", "string_list");
 
-        // Compter le nombre de produits dématérialisés de type vidéo & de produits physiques
-        $nb_prod_dematerialise = 0;
-        $nb_prod_physique = 0;
+        if($id == "")
+        {
+            // Tableau temporaire
+            $arrExclusion = array();
+            if($exclusion != "")
+                $arrExclusion = explode(",", $exclusion);
 
-        foreach($_SESSION['navig']->panier->tabarticle as &$art) {
-            $vodinfomaniak = new Vodinfomaniak();
-            if($vodinfomaniak->charger_produit($art->produit->id))
-                $nb_prod_dematerialise++;
-            else
-                $nb_prod_physique++;
+            $arrExclusion[] = $livraison_zero;
+
+            // On vérifie si le panier ne contient que des vidéos . Si oui, on propose uniquement $livraison_zero
+            $nb_livraison_zero = 0;
+            foreach($_SESSION['navig']->panier->tabarticle as &$art) {
+                if($art->livraison_zero)
+                {
+                    $nb_livraison_zero++;
+
+                } else {
+                    $vodinfomaniak = new Vodinfomaniak();
+                    if($vodinfomaniak->charger_produit($art->produit->id))
+                    {
+                        $nb_livraison_zero++;
+                        $art->livraison_zero = true;
+                    }
+                }
+            }
+
+            // On compare le nombre d'article du panier et le nombre de produits de type vod trouvé
+            if($_SESSION['navig']->panier->nbart == $nb_livraison_zero)
+            {
+                // On recherche l'id du module $livraison_zero
+                $mod = new Modules();
+                if($mod->charger($livraison_zero))
+                    $id = $mod->id;
+
+            } else {
+                // Substitutions
+                $texte = str_replace("#ID", "", $texte);
+                $texte = str_replace("#EXCLUSION", implode(",", $arrExclusion), $texte);
+
+                return $texte;
+            }
+
         }
 
-        // La commande ne conitent que des produits dématérialisés de type vidéo
-        if($nb_prod_dematerialise > 0 &&  $nb_prod_physique == 0) {
-            // on doit exclure tous les autres modes de livraison
-            $modules = new Modules();
-            $modulesListe = $modules->query_liste("SELECT nom FROM $modules->table WHERE actif=1 AND type=2 AND nom <> '".self::MODULE."'");
-            foreach($modulesListe as $mod)
-            {
-                $exclusion .= $mod->nom.",";
-            }
-        } else { $exclusion = self::MODULE.","; }
-
         // Substitutions
-        $texte = str_replace("#VOD_EXCLUSION", $exclusion, $texte);
+        $texte = str_replace("#ID", $id, $texte);
+        $texte = str_replace("#EXCLUSION", "", $texte);
 
         return $texte;
     }
@@ -449,7 +451,7 @@ class Vodinfomaniak extends PluginsTransports {
     public function video_url($sToken, $sVideoName)
     {
         // On construit l'url
-        $url = CONST_VODINFOMANIAK_URL;
+        $url = defined('CONST_VODINFOMANIAK_URL') ? CONST_VODINFOMANIAK_URL : "?fond=player&name=__SVIDEONAME__";
 
         // Répertoire ayant une restriction par clé
         $hash = $sToken ? $this->getTemporaryKey($sToken, $sVideoName) : "";
@@ -505,12 +507,6 @@ class Vodinfomaniak extends PluginsTransports {
 
         $vod_config = new Vodinfomaniak_config();
         $vod_config->destroy();
-
-        // On supprime l'association à une ZONE
-        $mod = new Modules();
-        $mod->charger(self::MODULE);
-
-        $this->query("DELETE FROM " . Transzone::TABLE . " WHERE transport = $mod->id");
     }
 }
 ?>

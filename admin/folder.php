@@ -8,7 +8,7 @@
 <!-- bloc déclinaisons / colonne gauche -->
 <div id="bloc_description">
 	<div class="entete_liste_config">
-		<div class="titre"><?php echo trad(CONST_VODINFOMANIAK_STOKEN == 1 ? 'Liste des dossiers' : 'Liste des dossiers sécurisés' , 'vodinfomaniak'); ?></div>
+		<div class="titre"><?php echo trad((defined('VODINFOMANIAK_STOKEN') && VODINFOMANIAK_STOKEN == 1) ? 'Liste des dossiers' : 'Liste des dossiers sécurisés' , 'vodinfomaniak'); ?></div>
 		<div class="fonction_valider">
 			<a onclick="$('#frm_folder').submit(); return false;" href="#"><?php echo trad('VALIDER LES MODIFICATIONS', 'admin'); ?></a>
 		</div>

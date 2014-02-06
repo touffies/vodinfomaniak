@@ -140,7 +140,7 @@ class Vodinfomaniak_config extends Variable {
                     foreach ($aListFolder as $oFolder) {
 
                         // On veut uniquement des dossiers avec une restriction par clé
-                        if(!(CONST_VODINFOMANIAK_STOKEN == 1 && empty($oFolder['sToken']))) {
+                        if(!(defined('VODINFOMANIAK_STOKEN') && VODINFOMANIAK_STOKEN == 1 && empty($oFolder['sToken']))) {
                             $vod_folder->add_folder($oFolder['iFolderCode'], $oFolder['sFolderPath'], $oFolder['sFolderName'], $oFolder['sAccess'], $oFolder['sToken']);
                             $folderListID[] = $oFolder['iFolderCode'];
                         }
@@ -162,7 +162,8 @@ class Vodinfomaniak_config extends Variable {
                 $vod_video->purge();
 
                 // On met à jour la liste des vidéos
-                $aVideos = $vod_api->getLastVideo(CONST_VODINFOMANIAK_VIDEO_MAX, 0);
+                $iLimit = defined('VODINFOMANIAK_VIDEO_MAX') ? VODINFOMANIAK_VIDEO_MAX : 200;
+                $aVideos = $vod_api->getLastVideo($iLimit, 0);
                 foreach ($aVideos as $oVideo) {
                     // On filtre les vidéos
                     if(count($folderListID) > 0) {

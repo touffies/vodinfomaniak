@@ -134,9 +134,11 @@ class Vodinfomaniak_commande extends Baseobj {
      */
     public function add()
     {
+        $duree = defined('VODINFOMANIAK_TIME_MAX') ? VODINFOMANIAK_TIME_MAX : 7;
+
         // On sauvegarde la date de début et de fin de location au moment de l'achat
         $this->datedebut = date("Y-m-d H:i:s");
-        $this->datefin = date('Y-m-d H:i:s', date(strtotime("+".CONST_VODINFOMANIAK_TIME_MAX." day", strtotime($this->datedebut))));
+        $this->datefin = date('Y-m-d H:i:s', date(strtotime("+".$duree." day", strtotime($this->datedebut))));
 
         $this->id = parent::add();
         return $this->id;
@@ -208,7 +210,8 @@ class Vodinfomaniak_commande extends Baseobj {
         $texte = str_replace("__COMMANDE_HEURE__", strftime("%H:%M:%S", $datecommande), $texte);
 
         /* VOD */
-        $texte = str_replace("__VOD_DUREE__", CONST_VODINFOMANIAK_TIME_MAX, $texte);
+        $duree = defined('VODINFOMANIAK_TIME_MAX') ? VODINFOMANIAK_TIME_MAX : 7;
+        $texte = str_replace("__VOD_DUREE__", $duree, $texte);
 
         preg_match("`<VENTEVOD>([^<]+)</VENTEVOD>`", $texte, $cut);
         $texte = str_replace("<VENTEVOD>", "", $texte);
