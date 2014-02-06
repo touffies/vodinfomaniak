@@ -177,9 +177,6 @@ class Vodinfomaniak extends PluginsClassiques {
 
         $boucle = strtolower(lireTag($args, 'boucle'));
 
-        // Sécurité
-        if(empty($boucle)) return;
-
         switch($boucle)
         {
             case 'commande':
@@ -415,13 +412,8 @@ class Vodinfomaniak extends PluginsClassiques {
         // Récupération des arguments
         $vod_id = intval(lireTag($args, "id", "int"));
 
-        // Substitutions
-        $texte = str_replace("#VOD_URL", $video_url.".".strtolower($vodinfomaniak_video->sExtension) . $sKey, $texte);
-        $texte = str_replace("#VOD_PLAYER", $vodinfomaniak_player->iPlayer, $texte);
-        $texte = str_replace("#VOD_CODESERVICE", Variable::lire('vodinfomaniak_icodeservice'), $texte);
-        $texte = str_replace("#VOD_WIDTH", $vodinfomaniak_player->iWidth, $texte);
-        $texte = str_replace("#VOD_HEIGHT", $vodinfomaniak_player->iHeight, $texte);
-        $texte = str_replace("#VOD_IMAGE", $video_url.".jpg", $texte);
+        if($this->charger_id($vod_id))
+            $texte = boucleProduit($texte, "id=\"$this->produit_id\"");
 
         return $texte;
     }
