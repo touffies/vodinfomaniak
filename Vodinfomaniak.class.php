@@ -434,7 +434,7 @@ class Vodinfomaniak extends PluginsClassiques {
             if($this->charger_produit($art->produit->id))
             {
                 $vodinfomaniak_commande = new Vodinfomaniak_commande();
-                $vodinfomaniak_commande->vodinfomaniak_id = $vodinfomaniak->id;
+                $vodinfomaniak_commande->vodinfomaniak_id = $this->id;
                 $vodinfomaniak_commande->commande_id = $commande->id;
                 $vodinfomaniak_commande->add();
             }
