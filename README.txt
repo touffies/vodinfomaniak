@@ -196,12 +196,12 @@ Vous pouvez lancer une synchronisation, manuellement, en cliquant sur le bouton 
 
 Vous devez lancer une synchronisation, manuellement, en cliquant sur le bouton `Synchroniser mom compte` qui se trouve dans `Modules -> VOD Infomaniak Network`.
 
-Par défaut, le plugin n'affiche que les dossiers sécurisés, mais vous pouvez modifier le comportement et afficher tous les dossiers en modifiant la valeur de la constante `VODINFOMANIAK_STOKEN` dans le fichier `confog.php`. (0 : tous les dossiers ou 1 : uniquement les dossiers sécurisés)
+Par défaut, le plugin n'affiche que les dossiers sécurisés, mais vous pouvez modifier le comportement et afficher tous les dossiers en modifiant la valeur de la constante `VODINFOMANIAK_STOKEN` dans le fichier `config.php`. (0 : tous les dossiers ou 1 : uniquement les dossiers sécurisés)
 
 
 **Je voudrais diminuer ou augmenter la durée de location**
 
-Il vous suffie de modifier la valeur de la constante `VODINFOMANIAK_TIME_MAX` dans le fichier `confog.php`.
+Il vous suffie de modifier la valeur de la constante `VODINFOMANIAK_TIME_MAX` dans le fichier `config.php`.
 
 
 ----------
