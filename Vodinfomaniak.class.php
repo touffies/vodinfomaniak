@@ -251,7 +251,7 @@ class Vodinfomaniak extends PluginsClassiques {
 
                 $tmp = str_replace("#VOD_COMMANDE_ID", $vod_cmd->commande_id, $tmp);
                 $tmp = str_replace("#VOD_TITRE", $proddesc->titre, $tmp);
-                $tmp = str_replace("#VOD_NAME", $vod_video->sName, $tmp);
+                $tmp = str_replace("#VOD_NOM", $vod_video->sName, $tmp);
                 $tmp = str_replace("#VOD_URL", $this->video_url($vod_folder->sToken, $vod_video->sServerCode, $vod->id), $tmp);
 
                 $vod_datedebut = strtotime($vod_cmd->datedebut);

@@ -61,33 +61,37 @@ Le paramètre "boucle" permet de désigner la boucle a exécuter.
 
 1) **Boucle transport**
 
-Cette boucle doit être utilisée autour de la boucle TRANSPORT de Thelia. Elle
-permet de filtrer le mode de livraison proposé au client.
 
- - si le panier ne comporte que des produits dématérialisés de type vidéo, alors le mode de livraison "N/A" sera uniquement proposé.
- - Sinon les modes de transports traditionels seront proposés.
+Cette boucle doit être utilisée autour de la boucle TRANSPORT de Thelia. Elle
+permet d'annuler les frais de livraison dans la cas ou le panier ne comporte que
+des produits dématérialisés de type vidéo.
 
 **Paramètres:**
 
-   Aucun
+ - id : Identifiant d'un plugin de transport
+ - exlcusion :  Liste de nom à exclure, sépraré par une virgule ","
 
 **Variables:**
+
 ```
-#VOD_EXCLUSION  : Nom des modes de livraison à exclure
+   #ID : Identifiant du plugin de transport
+   #EXCLUSION : Liste de nom à exclure, sépraré par une virgule ","
 ```
+
 Exemple d'utilisation :
 
 ```
 <div class="choixDeLaLivraison">
     <ul>
-        <THELIA_vodtransport type="VODINFOMANIAK" boucle="transport">
-            <THELIA_transport type="TRANSPORT" exclusion="#VOD_EXCLUSION">
-                <li><a href="#URLCMD"><span class="modeDeLivraison">#TITRE / #PORT €</span><span class="choisir"></span></a></li>
+        <THELIA_vodinfomaniak type="VODINFOMANIAK" boucle="transport">
+            <THELIA_transport type="PREPAYMENT" boucle="transport" exclusion="#EXCLUSION" id="#ID">
+                <li><a href="#URLCMD"><span class="modeDeLivraison">#TITRE / #PORT €</span></a></li>
             </THELIA_transport>
-        </THELIA_vodtransport>
+        </THELIA_vodinfomaniak>
     </ul>
 </div>
 ```
+
 
 2) **Boucle commande**
 
@@ -173,7 +177,7 @@ QUESTIONS FREQUENTES
 **Est-ce qu'il faut que je fournisse mes identifiants personnels au plugin ?**
 
 Cela fonctionne, mais pour des raisons de sécurités, il est fortement déconseillé de le faire.
-Il est nettement plus prudent dans votre interface d'administration VOD de créer un nouvel utilisateur et de ne lui attribuer que les droits "Gestion API".
+Il est nettement plus prudent dans votre interface d'administration VOD de créer un nouvel utilisateur et de ne lui attribuer que les droits **Gestion API**.
 En cas de problème, il sera bien plus aisé de supprimer l'utilisateur ou de changer son mot de passe que de compromettre tous ses services.
 
 
@@ -186,6 +190,18 @@ Il peut cependant arriver un problème avec l'adresse de callback. C'est une adr
 Cette adresse doit donc être joignable de façon publique. (Pour plus d'informations, se reporter à la page `Gestion VOD > Configuration`)
 
 Vous pouvez lancer une synchronisation, manuellement, en cliquant sur le bouton `Synchroniser mom compte` qui se trouve dans `Modules -> VOD Infomaniak Network`.
+
+
+**J'ai ajouté de nouveaux dossiers, mais ils n'apparaissent pas dans la liste des dosisiers du site**
+
+Vous devez lancer une synchronisation, manuellement, en cliquant sur le bouton `Synchroniser mom compte` qui se trouve dans `Modules -> VOD Infomaniak Network`.
+
+Par défaut, le plugin n'affiche que les dossiers sécurisés, mais vous pouvez modifier le comportement et afficher tous les dossiers en modifiant la valeur de la constante `VODINFOMANIAK_STOKEN` dans le fichier `confog.php`. (0 : tous les dossiers ou 1 : uniquement les dossiers sécurisés)
+
+
+**Je voudrais diminuer ou augmenter la durée de location**
+
+Il vous suffie de modifier la valeur de la constante `VODINFOMANIAK_TIME_MAX` dans le fichier `confog.php`.
 
 
 ----------
