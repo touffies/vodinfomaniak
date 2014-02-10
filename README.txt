@@ -1,4 +1,4 @@
-PLUGIN DE LIVRAISON POUR THELIA 1.5
+PLUGIN DE VOD INFOMANIAK POUR THELIA 1.5
 --------------------------------------
 
 Ce plugin vous permet de vendre des produits dématérialisés de type vidéo
