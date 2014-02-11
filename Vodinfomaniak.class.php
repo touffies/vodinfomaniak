@@ -224,7 +224,11 @@ class Vodinfomaniak extends PluginsClassiques {
         if (intval($client_id) > 0) $where .= " AND cmd.client=" . intval($client_id);
         if ($statutexcl != "") $where .= " AND cmd.statut NOT IN ($statutexcl)";
         if ($statut != "" && $statut != "paye") $where .= " AND cmd.statut=\"$statut\"";
-        else $where .= " AND cmd.statut > \"1\" AND cmd.statut <> \"5\""; // Par défaut, on recherche pour les statuts : Payé, Traitement et Envoyé.
+        else {
+            // Par défaut, on exclue les statuts : Non Payé et Annulé.
+            $statut_exclusion = defined('VODINFOMANIAK_STATUT_EXCLUSION') ? VODINFOMANIAK_STATUT_EXCLUSION : '1,5';
+            $where .= " AND cmd.statut NOT IN ($statut_exclusion)";
+        }
 
         $order = ($classement == "inverse") ? " ORDER BY vod_cmd.datedebut ASC" : " ORDER BY vod_cmd.datedebut DESC";
 

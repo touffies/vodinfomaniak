@@ -42,4 +42,7 @@ define("VODINFOMANIAK_URL", "?fond=player&key=__SKEY__&name=__SVIDEONAME__&vod=_
 // Nom du module à utiliser si on veut avoir aucun frais de livraison
 define("VODINFOMANIAK_LIVRAISON_ZERO", "livraison_zero");
 
+// Exclure les Vidéo dans les statuts ci-dessous (Non payé et Annulé)
+define("VODINFOMANIAK_STATUT_EXCLUSION", "1,5");
+
 ?>
