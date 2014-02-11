@@ -209,6 +209,7 @@ Il vous suffie de modifier la valeur de la constante `VODINFOMANIAK_TIME_MAX` da
 CHANGELOG
 ---------
 
+- **1.0.2** (11/02/2014) - Ajout d'une constante pour filtrer les statuts (Non Payé et Annulé)
 - **1.0.1** (10/02/2014) - Ajout du fichier Readme.md (Markdown)
 - **1.0.0** (29/01/2014) - Première version du plugin
 
