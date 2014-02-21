@@ -203,7 +203,7 @@ class Vodinfomaniak_config extends Variable {
                     }
 
                     // Let's go, on envoie le lien de callback
-                    $vod_api->setCallbackV2($urlsite . "/client/plugins/vodinfomaniak/callback.php?key=" . $this->lire('vodinfomaniak_callback_key'));
+                    $vod_api->setCallbackV2(rtrim($urlsite, '/') . "/client/plugins/vodinfomaniak/callback.php?key=" . $this->lire('vodinfomaniak_callback_key'));
 
                     } catch (Exception $oException) {
                         // Oups, il faudra faire les mises à jour manuellement
