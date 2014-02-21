@@ -37,7 +37,7 @@
                     <input style="width: 355px;" name="valeur[vodinfomaniak_pwd]" id="vodinfomaniak_pwd" type="text" class="form" value="<?php echo  $vod_config->lire_pwd('vodinfomaniak_pwd'); ?>" />
                 </li>
             </ul>
-            <ul class="ligne_fonce_BlocDescription">
+            <ul class="ligne_claire_BlocDescription">
                 <li style="width:195px;"><label for="vodinfomaniak_id"><?php echo trad('Identifiant VOD', 'vodinfomaniak'); ?></label></li>
                 <li style="width:360px; border-left:1px solid #96A8B5;">
                     <input style="width: 355px;" name="valeur[vodinfomaniak_id]" id="vodinfomaniak_id" type="text" class="form" value="<?php echo  $vod_config->lire('vodinfomaniak_id'); ?>" />
