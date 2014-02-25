@@ -24,6 +24,9 @@
 /*                                                                                   */
 /*************************************************************************************/
 
+// On s'assure que la constante __DIR__ est définie pour les versions de PHP antérieur à 5.3
+(@__DIR__ == '__DIR__') && define('__DIR__', realpath(dirname(__FILE__)));
+
 include_once __DIR__ . "/../../../../classes/Variable.class.php";
 
 /**
