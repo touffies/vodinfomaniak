@@ -6,7 +6,7 @@
     <description>Ce plugin vous permet de vendre des produits dématérialisés de type vidéo, hébergés par Infomaniak Network. (http://streaming.infomaniak.com/stockage-video-en-ligne)</description>
     <postscriptum></postscriptum>
   </descriptif>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <auteur>
     <nom>Christophe Laffont - claffont@openstudio.fr</nom>
     <societe>OpenStudio</societe>
