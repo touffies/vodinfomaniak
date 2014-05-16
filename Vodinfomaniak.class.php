@@ -143,26 +143,29 @@ class Vodinfomaniak extends PluginsClassiques {
      */
     public function modprod(Produit $produit)
     {
-        $select_video = trim(lireParam("select_video", "int"));
-
-        // On met à jour la table de liaison vodinfomaniak
-        if($this->charger_produit($produit->id))
-        {
-            // Une vidéo est séléctionnée
-            if (intval($select_video) > 0) {
-                $this->iVideo = $select_video;
-                $this->maj();
+        // On teste l'existence du champs pour ne pas effacer les données lors des requêtes en ajax
+        if(isset($_REQUEST['select_video'])){
+            $select_video = trim(lireParam("select_video", "int"));
+    
+            // On met à jour la table de liaison vodinfomaniak
+            if($this->charger_produit($produit->id))
+            {
+                // Une vidéo est séléctionnée
+                if (intval($select_video) > 0) {
+                    $this->iVideo = $select_video;
+                    $this->maj();
+                } else {
+                    // Ce produit n'a pas de Vidéo
+                    $this->delete();
+                }
             } else {
-                // Ce produit n'a pas de Vidéo
-                $this->delete();
-            }
-        } else {
-            // Une vidéo est séléctionnée
-            if (intval($select_video) > 0) {
-                // On ajoute une entrée
-                $this->produit_id = $produit->id;
-                $this->iVideo = $select_video;
-                $this->add();
+                // Une vidéo est séléctionnée
+                if (intval($select_video) > 0) {
+                    // On ajoute une entrée
+                    $this->produit_id = $produit->id;
+                    $this->iVideo = $select_video;
+                    $this->add();
+                }
             }
         }
     }
